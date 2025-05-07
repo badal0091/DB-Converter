@@ -3,7 +3,12 @@ import { Marked } from 'https://cdn.jsdelivr.net/npm/marked@13/+esm';
 mermaid.initialize({ startOnLoad: false });
 
 // Replace with your actual OpenAI API key
-const OPENAI_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkJhZGFsLlZhcnNobmV5QHN0cmFpdmUuY29tIn0.GPHU4KftE7tzyWrhtggZydjYQrgn0EIRLGm3iagWEIE';
+let OPENAI_API_KEY;
+try {
+  OPENAI_API_KEY = (await fetch("https://llmfoundry.straive.com/token", { credentials: "include" }).then((r) => r.json())).token;
+} catch {
+  OPENAI_API_KEY = null;
+}
 
 // Elements
 const fileInput = document.getElementById('fileInput');
